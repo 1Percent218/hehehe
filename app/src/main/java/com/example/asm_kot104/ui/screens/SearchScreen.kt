@@ -11,15 +11,18 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.asm_kot104.model.Cart
 import com.example.asm_kot104.model.Category
 import com.example.asm_kot104.model.Product
 import com.example.asm_kot104.model.Screen
 import com.example.asm_kot104.ui.components.EditText
 import com.example.asm_kot104.ui.components.ItemHome
+import com.example.asm_kot104.viewmodel.CartViewModel
 
 @Composable
-fun SearchScreen(navController: NavController) {
+fun SearchScreen(navController: NavController, cartViewModel: CartViewModel = viewModel()) {
     val list = listOf(
         Product(
             _id = "",
@@ -92,7 +95,14 @@ fun SearchScreen(navController: NavController) {
             Modifier.padding(10.dp)
         ) {
             items(list) { item ->
-                ItemHome(item, onClick = {
+                ItemHome(item, addToCart = {
+                    cartViewModel.addCart(
+                        Cart(
+                        idProduct = item,
+                        quantity = 1,
+                        idAccount = "123"
+                    ))
+                }, onClick = {
                     navController.navigate(Screen.VIEW_DETAIL_SCREEN.name)
                 })
             }

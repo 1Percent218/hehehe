@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -33,16 +34,19 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.asm_kot104.R
+import com.example.asm_kot104.model.Account
 import com.example.asm_kot104.model.Screen
 import com.example.asm_kot104.ui.components.ButtonFilled
 import com.example.asm_kot104.ui.components.ButtonOutline
 import com.example.asm_kot104.ui.components.CheckBoxCustom
 import com.example.asm_kot104.ui.components.EditText
+import com.example.asm_kot104.viewmodel.LoginViewModel
 
 @Composable
-fun LoginScreenPromax(navController: NavController) {
+fun LoginScreenPromax(navController: NavController, loginViewModel: LoginViewModel = viewModel()) {
     ConstraintLayout {
         val (helloRef,
             cardRef,
@@ -53,6 +57,10 @@ fun LoginScreenPromax(navController: NavController) {
         var isCheckRemember by remember {
             mutableStateOf(false)
         }
+        val loginResult by loginViewModel.loginResult.observeAsState()
+        val errorMessage by loginViewModel.errorMessage.observeAsState()
+        var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
         Image(
             painter = painterResource(id = R.drawable.bgr_login),
             contentDescription = null,
@@ -99,19 +107,25 @@ fun LoginScreenPromax(navController: NavController) {
                 .fillMaxWidth(0.85f)) {
             Column(modifier = Modifier.padding(20.dp)) {
                 Spacer(modifier = Modifier.height(10.dp))
-                EditText(value = "", label = "Email") {
-
+                EditText(value = email, label = "Email") {
+                    email = it
                 }
-                EditText(value = "", label = "Password") {
-
+                EditText(value = password, label = "Password") {
+                    password = it
                 }
                 CheckBoxCustom(isCheck = isCheckRemember, text = "Remember password") {
                     isCheckRemember = it
                 }
+                errorMessage?.let {
+                    Text("Error: $it")
+                }
                 ButtonFilled(text = "Log in", modifier = Modifier.fillMaxWidth()) {
+                    loginViewModel.login(Account(email, password))
+
+                }
+                loginResult?.let {
                     navController.navigate(Screen.HOME_SCREEN.name)
                 }
-
                 TextButton(
                     onClick = { /*TODO*/ },
                     modifier = Modifier.align(Alignment.CenterHorizontally)

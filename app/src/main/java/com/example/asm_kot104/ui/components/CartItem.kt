@@ -45,7 +45,7 @@ fun CartItem(
                 .padding(8.dp),
         ) {
             AsyncImage(
-                model = item.idProduct.images[0], contentDescription = null,
+                model = item.idProduct?.images?.get(0), contentDescription = null,
                 modifier = Modifier.size(100.dp),
                 contentScale = ContentScale.Crop
             )
@@ -61,9 +61,9 @@ fun CartItem(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column {
-                        Text(text = item.idProduct.name, style = MaterialTheme.typography.bodyLarge)
+                        item.idProduct?.name?.let { Text(text = it, style = MaterialTheme.typography.bodyLarge) }
                         Text(
-                            text = "${item.idProduct.price} VNĐ",
+                            text = "${item.idProduct?.price} VNĐ",
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }

@@ -1,5 +1,7 @@
 package com.example.asm_kot104.ui.screens
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,8 +15,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,99 +30,13 @@ import com.example.asm_kot104.model.Product
 import com.example.asm_kot104.ui.components.ButtonFilled
 import com.example.asm_kot104.ui.components.CartItem
 import com.example.asm_kot104.ui.components.HeaderApp
+import com.example.asm_kot104.viewmodel.CartViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun CartScreen(navController: NavController) {
-    val list = listOf<Cart>(
-        Cart(
-            _id = "",
-            idAccount = "",
-            idProduct = Product(
-                _id = "",
-                name = "Capuchino",
-                images = listOf(
-                    "https://media.saigontourist.edu.vn/Media/1_STHCHOME/FolderFunc/202303/Images/capuchino-la-gi-20230320105423-e.jpg",
-                    "https://tse1.mm.bing.net/th?id=OIP.06dd8mqOosBGQLjQWZIXAQHaE8&pid=Api&P=0&h=180",
-                    "https://thienhatcoffee.com/wp-content/uploads/2022/03/capuchino-la-gi.jpg"
-                ),
-                price = 59000,
-                description = "Cappuccino là một thức uống bao gồm cafe espresso, sữa nóng với bề mặt được phủ bằng bọt sữa. Cappuccino thường được pha bởi máy pha cà phê Espresso. Cafe espresso được rót vào cốc, sau đó cho một lượng sữa nóng được tạo ra bằng cách đun nóng sữa bằng đũa hơi, trên cùng là lớp bọt sữa.",
-                categoryId = Category(_id = "660b727f19117d400e56232f")
-            ),
-            quantity = 1
-        ),
-
-        Cart(
-            _id = "",
-            idAccount = "",
-            idProduct = Product(
-                _id = "",
-                name = "Capuchino",
-                images = listOf(
-                    "https://media.saigontourist.edu.vn/Media/1_STHCHOME/FolderFunc/202303/Images/capuchino-la-gi-20230320105423-e.jpg",
-                    "https://tse1.mm.bing.net/th?id=OIP.06dd8mqOosBGQLjQWZIXAQHaE8&pid=Api&P=0&h=180",
-                    "https://thienhatcoffee.com/wp-content/uploads/2022/03/capuchino-la-gi.jpg"
-                ),
-                price = 59000,
-                description = "Cappuccino là một thức uống bao gồm cafe espresso, sữa nóng với bề mặt được phủ bằng bọt sữa. Cappuccino thường được pha bởi máy pha cà phê Espresso. Cafe espresso được rót vào cốc, sau đó cho một lượng sữa nóng được tạo ra bằng cách đun nóng sữa bằng đũa hơi, trên cùng là lớp bọt sữa.",
-                categoryId = Category(_id = "660b727f19117d400e56232f")
-            ),
-            quantity = 1
-        ),
-
-        Cart(
-            _id = "",
-            idAccount = "",
-            idProduct = Product(
-                _id = "",
-                name = "Capuchino",
-                images = listOf(
-                    "https://media.saigontourist.edu.vn/Media/1_STHCHOME/FolderFunc/202303/Images/capuchino-la-gi-20230320105423-e.jpg",
-                    "https://tse1.mm.bing.net/th?id=OIP.06dd8mqOosBGQLjQWZIXAQHaE8&pid=Api&P=0&h=180",
-                    "https://thienhatcoffee.com/wp-content/uploads/2022/03/capuchino-la-gi.jpg"
-                ),
-                price = 59000,
-                description = "Cappuccino là một thức uống bao gồm cafe espresso, sữa nóng với bề mặt được phủ bằng bọt sữa. Cappuccino thường được pha bởi máy pha cà phê Espresso. Cafe espresso được rót vào cốc, sau đó cho một lượng sữa nóng được tạo ra bằng cách đun nóng sữa bằng đũa hơi, trên cùng là lớp bọt sữa.",
-                categoryId = Category(_id = "660b727f19117d400e56232f")
-            ),
-            quantity = 1
-        ),
-
-        Cart(
-            _id = "",
-            idAccount = "",
-            idProduct = Product(
-                _id = "",
-                name = "Capuchino",
-                images = listOf(
-                    "https://media.saigontourist.edu.vn/Media/1_STHCHOME/FolderFunc/202303/Images/capuchino-la-gi-20230320105423-e.jpg",
-                    "https://tse1.mm.bing.net/th?id=OIP.06dd8mqOosBGQLjQWZIXAQHaE8&pid=Api&P=0&h=180",
-                    "https://thienhatcoffee.com/wp-content/uploads/2022/03/capuchino-la-gi.jpg"
-                ),
-                price = 59000,
-                description = "Cappuccino là một thức uống bao gồm cafe espresso, sữa nóng với bề mặt được phủ bằng bọt sữa. Cappuccino thường được pha bởi máy pha cà phê Espresso. Cafe espresso được rót vào cốc, sau đó cho một lượng sữa nóng được tạo ra bằng cách đun nóng sữa bằng đũa hơi, trên cùng là lớp bọt sữa.",
-                categoryId = Category(_id = "660b727f19117d400e56232f")
-            ),
-            quantity = 1
-        ),
-        Cart(
-            _id = "",
-            idAccount = "",
-            idProduct = Product(
-                _id = "",
-                name = "Capuchino",
-                images = listOf(
-                    "https://media.saigontourist.edu.vn/Media/1_STHCHOME/FolderFunc/202303/Images/capuchino-la-gi-20230320105423-e.jpg",
-                    "https://tse1.mm.bing.net/th?id=OIP.06dd8mqOosBGQLjQWZIXAQHaE8&pid=Api&P=0&h=180",
-                    "https://thienhatcoffee.com/wp-content/uploads/2022/03/capuchino-la-gi.jpg"
-                ),
-                price = 59000,
-                description = "Cappuccino là một thức uống bao gồm cafe espresso, sữa nóng với bề mặt được phủ bằng bọt sữa. Cappuccino thường được pha bởi máy pha cà phê Espresso. Cafe espresso được rót vào cốc, sau đó cho một lượng sữa nóng được tạo ra bằng cách đun nóng sữa bằng đũa hơi, trên cùng là lớp bọt sữa.",
-                categoryId = Category(_id = "660b727f19117d400e56232f")
-            ),
-            quantity = 1
-        )
-    )
+fun CartScreen(navController: NavController, viewModel: CartViewModel = viewModel()) {
+    val list by viewModel.carts
+    Log.d("TAG", "CartScreen: ${list.size}")
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (headerRef, listRef, bottomRef) = createRefs()
         HeaderApp(

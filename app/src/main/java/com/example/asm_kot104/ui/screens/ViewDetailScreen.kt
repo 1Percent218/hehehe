@@ -42,7 +42,7 @@ import com.example.asm_kot104.ui.components.ButtonOutline
 @Composable
 fun ViewDetailScreen(item: Product, navController: NavController) {
     var currentImage by remember {
-        mutableStateOf(item.images[0])
+        mutableStateOf(item.images?.get(0))
     }
     var scrollState = rememberScrollState()
     Column(
@@ -66,7 +66,7 @@ fun ViewDetailScreen(item: Product, navController: NavController) {
                 .fillMaxWidth()
                 .wrapContentHeight()
         ) {
-            items(item.images) { item ->
+            items(item.images!!) { item ->
                 AsyncImage(
                     model = item,
                     contentDescription = "Item Image",
@@ -89,12 +89,14 @@ fun ViewDetailScreen(item: Product, navController: NavController) {
         ) {
             Row (horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()){
-                Text(
-                    text = item.name,
-                    color = Color(0xFF474747),
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                item.name?.let {
+                    Text(
+                        text = it,
+                        color = Color(0xFF474747),
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
                 ButtonOutline(text = "Buy now") {
                     
                 }
@@ -108,10 +110,12 @@ fun ViewDetailScreen(item: Product, navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = item.description,
-                modifier = Modifier.fillMaxWidth()
-            )
+            item.description?.let {
+                Text(
+                    text = it,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }
