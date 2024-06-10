@@ -4,7 +4,7 @@ import java.io.Serializable
 
 
 class Product : Serializable {
-    private var _id: String? = null
+    var _id: String? = null
     var name: String? = null
     var price: Int = 0
 
@@ -22,14 +22,6 @@ class Product : Serializable {
     var images: List<String>? = null
     var description: String? = null
     var categoryId: Category? = null
-
-    fun get_id(): String? {
-        return _id
-    }
-
-    fun set_id(_id: String?) {
-        this._id = _id
-    }
 
     constructor()
     constructor(_id: String?) {

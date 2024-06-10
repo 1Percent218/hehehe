@@ -11,19 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.asm_kot104.model.Category
-import com.example.asm_kot104.model.Product
-import com.example.asm_kot104.ui.components.ButtonFilled
-import com.example.asm_kot104.ui.components.ButtonOutline
-import com.example.asm_kot104.ui.components.EditText
-import com.example.asm_kot104.ui.components.MIcon
 import com.example.asm_kot104.ui.components.Navigation
-import com.example.asm_kot104.ui.screens.CartScreen
-import com.example.asm_kot104.ui.screens.HomeScreen
-import com.example.asm_kot104.ui.screens.LoginScreenPromax
-import com.example.asm_kot104.ui.screens.MyOrderScreen
-import com.example.asm_kot104.ui.screens.ShippingAddressScreen
-import com.example.asm_kot104.ui.screens.ViewDetailScreen
 import com.example.asm_kot104.ui.theme.ASM_KOT104Theme
 
 class MainActivity : ComponentActivity() {

@@ -16,6 +16,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 interface ApiService {
@@ -33,6 +34,9 @@ interface ApiService {
 
     @get:GET("products")
     val products: Call<List<Product?>?>?
+
+    @GET("search")
+    fun productsSearch(@Query("name") name: String): Call<List<Product?>?>?
 
     @GET("products/{id}")
     fun getProductById(@Path("id") id: String?): Call<Product?>?
@@ -59,7 +63,7 @@ interface ApiService {
     fun createBill(@Body bill: Bill?): Call<Bill?>?
 
     @get:GET("bills")
-    val bills: Call<List<Any?>?>?
+    val bills: Call<List<Bill>?>?
 
     @POST("billdetails")
     fun createBillDetails(@Body billDetails: BillDetails?): Call<BillDetails?>?

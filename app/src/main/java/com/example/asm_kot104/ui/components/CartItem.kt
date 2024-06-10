@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,7 +37,10 @@ import com.example.asm_kot104.model.Product
 
 @Composable
 fun CartItem(
-    item: Cart
+    item: Cart,
+    onMinus: ()->Unit,
+    onPlus:()-> Unit,
+    onDelete:()->Unit
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Row(
@@ -67,16 +71,14 @@ fun CartItem(
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
-                    Icon(imageVector = Icons.Default.Clear, contentDescription = "")
+                    IconButton(onClick = onDelete) {
+                        Icon(imageVector = Icons.Default.Clear, contentDescription = "")
+                    }
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    MIcon(iconId = R.drawable.ic_launcher_foreground) {
-
-                    }
+                    MIcon(iconId = R.drawable.baseline_minimize_24, onClick = onMinus)
                     Text("${item.quantity}", modifier = Modifier.padding(10.dp))
-                    MIcon(iconId = R.drawable.ic_launcher_foreground) {
-
-                    }
+                    MIcon(iconId = R.drawable.baseline_add_24, onClick = onPlus)
                 }
             }
         }
@@ -85,28 +87,4 @@ fun CartItem(
             .height(1.dp)
             .background(Color(0xFFDFDFDF)))
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun CartItemPreview() {
-    CartItem(
-        item = Cart(
-            _id = "",
-            idAccount = "",
-            idProduct = Product(
-                _id = "",
-                name = "Capuchino",
-                images = listOf(
-                    "https://media.saigontourist.edu.vn/Media/1_STHCHOME/FolderFunc/202303/Images/capuchino-la-gi-20230320105423-e.jpg",
-                    "https://tse1.mm.bing.net/th?id=OIP.06dd8mqOosBGQLjQWZIXAQHaE8&pid=Api&P=0&h=180",
-                    "https://thienhatcoffee.com/wp-content/uploads/2022/03/capuchino-la-gi.jpg"
-                ),
-                price = 59000,
-                description = "Cappuccino là một thức uống bao gồm cafe espresso, sữa nóng với bề mặt được phủ bằng bọt sữa. Cappuccino thường được pha bởi máy pha cà phê Espresso. Cafe espresso được rót vào cốc, sau đó cho một lượng sữa nóng được tạo ra bằng cách đun nóng sữa bằng đũa hơi, trên cùng là lớp bọt sữa.",
-                categoryId = Category(_id = "660b727f19117d400e56232f")
-            ),
-            quantity = 1
-        )
-    )
 }

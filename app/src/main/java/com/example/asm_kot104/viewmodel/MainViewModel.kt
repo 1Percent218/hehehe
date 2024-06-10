@@ -37,6 +37,17 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun search (string: String){
+        viewModelScope.launch {
+            try {
+                val response = apiService.productsSearch(string)?.await()
+                _products.value = response?.filterNotNull() ?: emptyList()
+            }catch (e:Exception){
+                Log.d("MainViewModel", "search: $e")
+            }
+        }
+    }
+
     private fun getCategories() {
         viewModelScope.launch {
             try {
